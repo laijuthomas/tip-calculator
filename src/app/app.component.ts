@@ -35,7 +35,8 @@ export class AppComponent {
       tip_percentage: ['', [Validators.required, Validators.min(1)]],
     });
     this.form.valueChanges.subscribe(value => {
-      if (value['bill_amount'] > 0 && value['tip_percentage'] > 0) {
+      const billAmount = value['bill_amount'] > 0 ? value['bill_amount'] : 0;
+      if (billAmount> 0 && value['tip_percentage'] > 0) {
         let tipAmount = (value['bill_amount'] * value['tip_percentage']) / 100
         
         if (value['no_of_people'] > 0) {
@@ -44,10 +45,11 @@ export class AppComponent {
         this.tipAmount.set(tipAmount);
       }
       
+      const total = billAmount + this.tipAmount();
       if (value['no_of_people'] > 0 && value['bill_amount'] > 0) {
-        this.totalAmount.set(value['bill_amount']/value['no_of_people']);
+        this.totalAmount.set(total/value['no_of_people']);
       } else {
-        this.totalAmount.set(value['bill_amount'] ? value['bill_amount'] : 0);
+        this.totalAmount.set(total);
       }
     });
   }

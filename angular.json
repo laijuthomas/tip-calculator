@@ -17,7 +17,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/tip-calculator",
+            "outputPath": {
+              "base": "docs",
+              "browser": ""
+            },
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -39,6 +42,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/tip-calculator/",
               "budgets": [
                 {
                   "type": "initial",
