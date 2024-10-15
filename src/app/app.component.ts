@@ -45,8 +45,12 @@ export class AppComponent {
         }
         this.tipAmount.set(tipAmount);
       }
-
-      this.totalAmount.set(value['bill_amount'] ? value['bill_amount'] : 0);
+      
+      if (value['no_of_people'] > 0 && value['bill_amount'] > 0) {
+        this.totalAmount.set(value['bill_amount']/value['no_of_people']);
+      } else {
+        this.totalAmount.set(value['bill_amount'] ? value['bill_amount'] : 0);
+      }
     });
   }
 
@@ -66,12 +70,4 @@ export class AppComponent {
     this.form.get('tip_percentage')?.setValue(tip);
   }
 
-  onFormSubmit() {
-    this.isFormInvalid = true;
-    console.log(this.form.value)
-    if (this.form.valid) {
-      this.isFormInvalid = false;
-      
-    }
-  }
 }
