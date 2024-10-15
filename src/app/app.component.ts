@@ -35,8 +35,6 @@ export class AppComponent {
       tip_percentage: ['', [Validators.required, Validators.min(1)]],
     });
     this.form.valueChanges.subscribe(value => {
-      console.log('name has changed:', value)
-
       if (value['bill_amount'] > 0 && value['tip_percentage'] > 0) {
         let tipAmount = (value['bill_amount'] * value['tip_percentage']) / 100
         

@@ -1,96 +1,113 @@
 <form [formGroup]="form">
-<div class="h-screen flex justify-center items-center">
-  <div
-    class="flex flex-col md:flex-row  gap-8 justify-center items-stretch rounded-2xl bg-white p-6 shadow-xl shadow-slate-900/10">
+  <div class="h-screen flex justify-center items-center">
+    <div
+      class="flex flex-col md:flex-row  gap-8 justify-center items-stretch rounded-2xl bg-white p-6 shadow-xl shadow-slate-900/10">
 
-    <!-- Left side -->
-    <div class="flex flex-col gap-4 ">
-      <div class="flex flex-col mb-4">
-        <p class="mb-2">Bill</p>
-        <input formControlName="bill_amount" type="number"
-          class="block border p-2.5 w-full text-sm text-gray-900 bg-slate-100 rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer" />
-        @if (isFormInvalid || (bill_amount?.invalid && (bill_amount?.dirty || bill_amount?.touched))) {
+      <!-- Left side -->
+      <div class="flex flex-col gap-4 ">
+        <div class="flex flex-col mb-4">
+          <p class="mb-2">Bill</p>
+          <div class="relative mt-2 rounded-md shadow-sm">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              <span class="text-gray-500 sm:text-sm">$</span>
+            </div>
+            <input formControlName="bill_amount" type="number"
+              class="block border pl-7 p-2.5 w-full text-sm text-gray-900 bg-slate-100 rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer" />
+          </div>
+          @if (isFormInvalid || (bill_amount?.invalid && (bill_amount?.dirty || bill_amount?.touched))) {
           @if (bill_amount?.hasError('required')) {
-            <small class="text-red-600">
-              Bill is required.
-            </small>
+          <small class="text-red-600">
+            Bill is required.
+          </small>
           }
           @if (bill_amount?.hasError('min')) {
-            <small class="text-red-600">Bill must be greater than 0.01.</small>
+          <small class="text-red-600">Bill must be greater than 0.01.</small>
           }
-        }
-      </div>
+          }
+        </div>
 
-      <div class="flex flex-col mb-4 mr-4">
-        <p class="mb-2">Select Tip %</p>
-        <div class="grid grid-cols-3 gap-2">
-          @for(tip of tipPercentageArray; track tip) {
-            <div (click)="setTipPercentage(tip)" [ngClass]="{'border-2 border-teal-400	': $any(tip_percentage).value === tip}" class="rounded-lg p-2.5 cursor-pointer text-white bg-secondary text-center">
+        <div class="flex flex-col mb-4 mr-4">
+          <p class="mb-2">Select Tip %</p>
+          <div class="grid grid-cols-3 gap-2">
+            @for(tip of tipPercentageArray; track tip) {
+            <div (click)="setTipPercentage(tip)"
+              [ngClass]="{'border-2 border-teal-400	': $any(tip_percentage).value === tip}"
+              class="rounded-lg p-2.5 cursor-pointer text-white bg-secondary text-center">
               {{tip}}%
             </div>
-          }
-          <input type="number" min="0.01" placeholder="Custom" (input)="setTipPercentage($any($event.target).value)"
-            class="block border p-2.5 w-full text-sm text-gray-900 bg-slate-100 rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer" />
-        </div>
-        @if (isFormInvalid || (tip_percentage?.invalid && (tip_percentage?.dirty || tip_percentage?.touched))) {
+            }
+            <div class="relative mt-2 rounded-md shadow-sm">
+              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <span class="text-gray-500 sm:text-sm">%</span>
+              </div>
+              <input formControlName="tip_percentage" type="number" min="0.01" placeholder="Custom"
+                class="block border p-2.5 pl-7 w-full text-sm text-gray-900 bg-slate-100 rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer" />
+            </div>
+          </div>
+          @if (isFormInvalid || (tip_percentage?.invalid && (tip_percentage?.dirty || tip_percentage?.touched))) {
           @if (tip_percentage?.hasError('required')) {
-            <small class="text-red-600">
-              Tip % is required.
-            </small>
+          <small class="text-red-600">
+            Tip % is required.
+          </small>
           }
           @if (tip_percentage?.hasError('min')) {
-            <small class="text-red-600"> Tip % must be greater than 0.01.</small>
+          <small class="text-red-600"> Tip % must be greater than 0.01.</small>
           }
-        }
-      </div>
+          }
+        </div>
 
-      <div class="flex flex-col mb-4">
-        <p class="mb-2">Number of People</p>
-        <input formControlName="no_of_people" type="number"
-          class="block border p-2.5 w-full text-sm text-gray-900 bg-slate-100 rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer" />
-      
+        <div class="flex flex-col mb-4">
+          <p class="mb-2">Number of People</p>
+          <div class="relative mt-2 rounded-md shadow-sm">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              <img width="15px" src="/assets/user-icon.svg">
+            </div>
+            <input formControlName="no_of_people" type="number"
+              class="block border p-2.5 pl-7 w-full text-sm text-gray-900 bg-slate-100 rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer" />
+          </div>
           @if (isFormInvalid || ( no_of_people?.invalid && (no_of_people?.dirty || no_of_people?.touched))) {
-            @if (no_of_people?.hasError('required')) {
-              <small class="text-red-600">
-                Number of People is required.
-              </small>
-            }
-            @if (no_of_people?.hasError('min')) {
-              <small class="text-red-600">Number of People must be greater than 0.01.</small>
-            }
+          @if (no_of_people?.hasError('required')) {
+          <small class="text-red-600">
+            Number of People is required.
+          </small>
+          }
+          @if (no_of_people?.hasError('min')) {
+          <small class="text-red-600">Number of People must be greater than 0.01.</small>
+          }
           }
         </div>
-    </div>
-
-    <!-- Right side, centered vertically -->
-    <div class="flex flex-col bg-secondary rounded-xl  md:w-1/2 w-full p-6">
-      <div class="flex flex-col mb-6 mt-4">
-        <div class="grid grid-cols-2 gap-2">
-          <div class="text-white">
-            Tip Amount
-            <small class="block text-gray-400">/person</small>
-          </div>
-          <div class="text-teal-400 text-2xl font-semibold text-right">
-            {{tipAmount() | currency:'USD'}}
-          </div>
-        </div>
       </div>
 
-      <div class="flex flex-col">
-        <div class="grid grid-cols-2 gap-2">
-          <div class="text-white">
-            Total
-            <small class="block text-gray-400">/person</small>
-          </div>
-          <div class="text-teal-400 text-2xl font-semibold text-right">
-            {{totalAmount() | currency:'USD'}}
+      <!-- Right side, centered vertically -->
+      <div class="flex flex-col bg-secondary rounded-xl  md:w-1/2 w-full p-6">
+        <div class="flex flex-col mb-6 mt-4">
+          <div class="grid grid-cols-2 gap-2">
+            <div class="text-white">
+              Tip Amount
+              <small class="block text-gray-400">/person</small>
+            </div>
+            <div class="text-teal-400 text-2xl font-semibold text-right">
+              {{tipAmount() | currency:'USD'}}
+            </div>
           </div>
         </div>
-      </div>
-      <div class="flex flex-col mt-auto">
-        <button type="button" (click)="form.reset()" class="btn bg-teal-700 text-white rounded-sm p-3 uppercase">Reset</button>
+
+        <div class="flex flex-col">
+          <div class="grid grid-cols-2 gap-2">
+            <div class="text-white">
+              Total
+              <small class="block text-gray-400">/person</small>
+            </div>
+            <div class="text-teal-400 text-2xl font-semibold text-right">
+              {{totalAmount() | currency:'USD'}}
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col mt-auto">
+          <button type="button" (click)="form.reset()"
+            class="btn bg-teal-700 text-white rounded-sm p-3 uppercase">Reset</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </form>
